@@ -22,22 +22,26 @@ Vue.use(vueresource)
 import app from './App.vue'
 
 
-// 引入mint-ui组件
-import { Header,Swipe,SwipeItem,Toast,Badge,Button } from 'mint-ui';
+// 按需引入mint-ui组件
+// import { Header,Swipe,SwipeItem,Toast,Badge,Button,Lazyload  } from 'mint-ui';
+import MintUi from 'mint-ui'
 //引入mint-ui样式文件
 import 'mint-ui/lib/style.css'
 // 将mint-ui组件挂载至Vue组件
-Vue.component(Header.name,Header);
-Vue.component(Swipe.name,Swipe);
-Vue.component(SwipeItem.name,SwipeItem);
-Vue.component(Toast.name,Toast);
-Vue.component(Badge.name,Badge);
-Vue.component(Button.name,Button);
+// Vue.component(Header.name,Header);
+// Vue.component(Swipe.name,Swipe);
+// Vue.component(SwipeItem.name,SwipeItem);
+// Vue.component(Toast.name,Toast);
+// Vue.component(Badge.name,Badge);
+// Vue.component(Button.name,Button);
+// Vue.use(Lazyload);
+Vue.use(MintUi);
 //引入mui样式 字体  js文件
 import './lib/mui/css/mui.min.css'
 import './lib/mui/css/icons-extra.css'
 import './lib/mui/fonts/mui.ttf'
 import './lib/mui/fonts/mui-icons-extra.ttf'
+
 import VueResource from 'vue-resource';
 import { isMoment } from 'moment';
 
@@ -54,6 +58,23 @@ import moment from 'moment'
 Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss") {
     return moment(dataStr).format(pattern);
 });
+
+
+// //引入vue-preview组件
+// import VuePreview from 'vue-preview'
+// // 挂载
+// Vue.use(VuePreview)
+
+//引入v-viewer组件、样式文件
+import Viewer from 'v-viewer'
+import '../node_modules/viewerjs/dist/viewer.css'
+//挂载
+Vue.use(Viewer)
+// 设置
+Viewer.setDefaults({
+    Options: { "inline": false, "button": true, "navbar": true, "title": true, "toolbar": false, "tooltip": true, "movable": false, "zoomable": true, "rotatable": true, "scalable": true, "transition": true, "fullscreen": true, "keyboard": true, "url": "data-source" }
+});
+
 
 
 // 创建vue实例

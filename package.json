@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --mode development --open --port 3000 --hot true --host 192.168.16.104",
+    "dev": "webpack-dev-server --mode development --open --port 3008 --hot true --host 192.168.16.104",
     "build": "webpack --mode production"
   },
   "performance": {
@@ -23,8 +23,10 @@
     "jquery": "^3.3.1",
     "mint-ui": "^2.2.13",
     "moment": "^2.22.2",
+    "v-viewer": "^1.2.1",
     "vue": "^2.5.17",
     "vue-loader": "^15.4.2",
+    "vue-preview": "^1.1.3",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1"
   },

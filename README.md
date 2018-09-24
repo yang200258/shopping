@@ -7,6 +7,13 @@
 ### 因在路由中设置重定向路径为‘/home’,但是‘home’路径指向的是App.vue组件，其中并没有包含中间的内容，要想获取到中间组件的内容，必须重定向至HomeContainer组件，且不用导入App.vue组件（因为vue实例已经指向app.vue组件）
 
 ## 2、引入mui组件时，报送严格模式错误
-###  因webpack启用严格js模式，但mui未达到标准，解决：配置.babelrc文件："ignore": [
-                                                                        "./src/lib/mui/js/*.js"
-                                                                    ]
+###  因webpack启用严格js模式，但mui未达到标准，解决：配置.babelrc文件："ignore": ["./src/lib/mui/js/*.js"];
+###  解决引入问题后，tabbar无法切换，是因为mui-tab-item重复问题导致：
+#### 需要修改tabbar中样式名称，并将原来样式复制至新的样式名称中
+#第二天遇到的问题：
+## 1、图片分享的滑动区域固定至顶部，位置丢失，图片会自动顶上：
+### 给.content内容区域添加margin-top值，但因权重问题，需要增加权重，且完成后设置header背景颜色为白色。
+##2、缩略图无法使用vue-preview渲染至页面
+###
+                                                                
+
