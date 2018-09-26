@@ -100,7 +100,7 @@ export default {
         border: none;
         li {
             border: 0;
-            border-radius: 50%;
+            // border-radius: 50%;
             span {
                 color: #26A2FF;
             }

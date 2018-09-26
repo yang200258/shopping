@@ -65,7 +65,7 @@ Vue.filter('dataFormat',function(dataStr,pattern="YYYY-MM-DD HH:mm:ss") {
 // // 挂载
 // Vue.use(VuePreview)
 
-//引入v-viewer组件、样式文件
+//引入v-viewer组件、样式文件 (缩略图)
 import Viewer from 'v-viewer'
 import '../node_modules/viewerjs/dist/viewer.css'
 //挂载
@@ -75,6 +75,116 @@ Viewer.setDefaults({
     Options: { "inline": false, "button": true, "navbar": true, "title": true, "toolbar": false, "tooltip": true, "movable": false, "zoomable": true, "rotatable": true, "scalable": true, "transition": true, "fullscreen": true, "keyboard": true, "url": "data-source" }
 });
 
+//引入vuex，设置公共信息，至购物车
+import Vuex from 'vuex'
+//挂载
+Vue.use(Vuex)
+//从本地存储中获取购物车信息
+var car = JSON.parse(localStorage.getItem('car') || '[]');
+//定义store
+const store = new Vuex.Store({
+    state: {
+        car: car
+    },
+    mutations: {
+        //将添加至购物车的商品信息储存至store中
+        addToCar(state,goodsinfo) {
+            var flag = false;
+            state.car.some(item=> {
+                if(item.id === goodsinfo.id) {
+                    item.count += parseInt(goodsinfo.count);
+                    flag = true;
+                    return true;
+                }
+            })
+            if(!flag) {
+                state.car.push(goodsinfo);
+            }
+            //购物车信息储存至本地存储
+            localStorage.setItem('car',JSON.stringify(state.car));
+            
+        },
+        //修改购物车中商品数量
+        updateGoodsInfo(state,goodsinfo) {
+            state.car.some(item=> {
+                if(item.id == goodsinfo.id) {
+                    item.count = parseInt(goodsinfo.count);
+                    return true;
+                }
+            });
+            //购物车信息储存至本地存储
+            localStorage.setItem('car',JSON.stringify(state.car));
+        },
+        //删除购物车中商品
+        removeGoods(state,id) {
+            state.car.some((item,i)=> {
+                if(item.id == id) {
+                    state.car.splice(i,1);
+                    return true;
+                }
+            });
+            //购物车信息储存至本地存储
+            localStorage.setItem('car',JSON.stringify(state.car));
+        },
+        //修改商品选中状态
+        updateGoodsSelected(state,info) {
+            state.car.some(item=> {
+                if(item.id == info.id) {
+                    item.selected = info.selected;
+                    console.log(info.selected);
+                    return true;
+                }
+            })
+            //购物车信息储存至本地存储
+            localStorage.setItem('car',JSON.stringify(state.car));
+        }
+    },
+    getters: {
+        getAllCount: state=> {
+            var c = 0;
+            console.log(state.car);
+            if(state.car.length > 0) {
+                if(state.car) {
+                    state.car.forEach((item)=> {
+                        c += item.count;
+                    })
+                }
+            }
+            
+            return c;
+        },
+        //获取购物车中数量
+        getGoodsCount(state) {
+            var o = {};
+            state.car.forEach(item=> {
+                o[item.id] = item.count;
+            });
+            return o;
+        },
+        //记录购物车商品状态
+        getGoodsSelected(state) {
+            var o = {};
+            state.car.forEach(item=> {
+                o[item.id] = item.selected;
+            });
+            return o;
+        },
+        //获取商品总计
+        getGoodsAmount(state) {
+            var o = {count: 0,amount: 0}
+            state.car.forEach(item=> {
+                if(item.selected) {
+                    o.count += item.count;
+                    o.amount += item.count * item.price;
+                }
+            })
+            return o;
+        }
+    }
+
+});
+
+
 
 
 // 创建vue实例
@@ -82,5 +192,6 @@ var vm = new Vue({
     el:'#app',
     router,
     // 渲染路由模块
-    render: c => c(app)
+    render: c => c(app),
+    store
 });

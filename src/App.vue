@@ -1,8 +1,13 @@
 <template>
     <div class="app-container">
-        <!-- 首页头部区域 //mint-ui--Header组件-->
+        <!-- 首页头部区域 //mint-uiHeader组件-->
         <div class="header">
-           <mt-header fixed title="购物商城"></mt-header>
+           <mt-header fixed title="购物商城">
+               <span slot="left" v-show="flag" @click="goBack()">
+                    <mt-button icon="back">返回</mt-button>
+                </span>
+           </mt-header>
+            
         </div>
         <!-- 主体区域 -->
         <div class="content">
@@ -23,7 +28,7 @@
                     <span class="mui-tab-label">会员</span>
                 </router-link>
                 <router-link class="mui-tab-item-add" to="/shopcar">
-                    <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge">9</span></span>
+                    <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge" id="badge">{{$store.getters.getAllCount}}</span></span>
                     <span class="mui-tab-label">购物车</span>
                 </router-link>
                 <router-link class="mui-tab-item-add" to="/person">
@@ -39,7 +44,32 @@
 </template>
 
 <script>
-
+export default {
+    data() {
+        return {
+            flag: false
+        }
+    },
+    methods: {
+        goBack() {
+            this.$router.go(-1)
+        }
+    },
+    created() {
+        this.flag = this.$route.path === '/home' ? false : true;
+        console.log(this.flag);
+    },
+    watch: {
+        '$route.path': function(newVal) {
+            if(newVal == '/home') {
+                this.flag = false;
+            } else {
+                this.flag = true;
+            }
+        }
+        
+    }
+}
 
 
 </script>

@@ -18,8 +18,11 @@ import newsinfo from './components/news/NewsInfo.vue'
 
 //引入购物模块组件
 import goods from './components/goods/GoodsList.vue'
+import goodsinfo from './components/goods/GoodsInfo.vue'
+import photodesc from './components/photo/PhotoDesc.vue'
 
-
+//导入评论模块
+import goodscomment from './components/subcomponent/goodsinfo/GoodsComment.vue'
 
 const router = new VueRouter({
     routes: [
@@ -33,7 +36,10 @@ const router = new VueRouter({
         {path: '/home/newslist/newsinfo/:id',component:newsinfo },
         {path: '/home/photolist',component: photo},
         {path: '/home/photolist/photoinfo/:id',component: photoinfo},
-        {path:'/home/goodslist',component: goods}
+        {path:'/home/goodslist',component: goods},
+        {path:'/home/goodslist/goodsinfo/:id',component: goodsinfo,name: "goodsinfo"},
+        {path: '/home/goodslist/goodsinfo/photodesc/:id',component:photodesc,name:"photodesc"},
+        {path: '/home/goodslist/goodsinfo/goodscomment/:id',component:goodscomment,name:"goodscomment"}
     ],
     linkActiveClass: 'mui-active'
 });
